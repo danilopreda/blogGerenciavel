@@ -17,7 +17,7 @@
     <div id="app">
 
         <topo titulo="{{ config('app.name', 'Laravel') }}" url="{{ url('/') }}">
-        
+
             <!-- Authentication Links -->
             @guest
                 <li><a href="{{ route('login') }}">Login</a></li>
@@ -43,7 +43,7 @@
                     </ul>
                 </li>
             @endguest
-        
+
         </topo>
 
         @yield('content')
