@@ -3,6 +3,7 @@
 @section('content')
     <pagina tamanho="12">
         <painel titulo="Lista de Artigos">
+            <migalhas v-bind:lista="{{$listaMigalhas}}"></migalhas>
             <tabela-lista
             v-bind:titulos="['teste', 'outros']"
             v-bind:itens="[[1,'PHP OO', 'Curso de PHO OO'], [2, 'Vue JS', 'Curso de Vue JS']]"

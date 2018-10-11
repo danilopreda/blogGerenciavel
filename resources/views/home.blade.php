@@ -4,7 +4,7 @@
     <pagina tamanho="10">
         <painel titulo="Dashboard">
 
-            Teste de Conteúdo..
+            <migalhas v-bind:lista="{{$listaMigalhas}}"></migalhas>
 
             <div class="row">
 
