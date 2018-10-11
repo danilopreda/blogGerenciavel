@@ -11,7 +11,7 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th v-for="titulo in titulos">{{titulo}}</th>
+                    <th style="cursor:pointer" v-on:click="ordenaColuna(index)" v-for="(titulo,index) in titulos">{{titulo}}</th>
                     <th v-if="detalhe || editar || deletar">Ação</th>
                 </tr>
             </thead>
@@ -47,20 +47,49 @@
 
 <script>
     export default {
-        props:['titulos', 'itens', 'criar', 'detalhe', 'editar', 'deletar', 'token'],
+        props:['titulos', 'itens', 'ordem', 'ordemcol', 'criar', 'detalhe', 'editar', 'deletar', 'token'],
         data: function(){
             return {
-                buscar:''
+                buscar:'',
+                ordemAux: this.ordem || "asc",
+                ordemAuxCol: this.ordemcol || 0,
             }
         },
         methods:{
             executaForm: function(index){
                 document.getElementById(index).submit();
+            },
+            ordenaColuna: function(coluna){
+                this.ordemAuxCol = coluna;
+                if(this.ordemAux.toLowerCase() == "asc"){
+                    this.ordemAux = 'desc';
+                }else{
+                    this.ordemAux = 'asc';
+                }
             }
         },
         computed:{
             lista:function(){
-                let busca = "php";
+
+                let ordem = this.ordemAux;
+                let ordemCol = this.ordemAuxCol;
+                ordem = ordem.toLowerCase();
+                ordemCol = parseInt(ordemCol);
+
+                if(ordem == "asc"){
+                    this.itens.sort(function(a,b){
+                        if (a[ordemCol] > b[ordemCol]){return 1;}
+                        if (a[ordemCol] < b[ordemCol]){return -1;}
+                        return 0;
+                    });
+                }else{
+                    this.itens.sort(function(a,b){
+                        if (a[ordemCol] < b[ordemCol]){return 1;}
+                        if (a[ordemCol] > b[ordemCol]){return -1;}
+                        return 0;
+                    });
+                }
+
                 return this.itens.filter(res => {
                     for(let k = 0; k < res.length; k++){
                         if((res[k] + "").toLowerCase().indexOf(this.buscar.toLowerCase()) >= 0){
